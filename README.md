@@ -1,6 +1,6 @@
 # To-Do List
 
-This is the first version.
+This is the first version of TODO app. It uses only the DOM and Vanilla JS.
 
 ## Getting Started
 
