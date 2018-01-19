@@ -2,9 +2,9 @@ var yo = require('yo-yo')
 const uuidv1 = require('uuid/v1')
 
 var numbers = []; // start empty 
-var el = list(numbers, update, deleteTodo, generate);
+var el = list(numbers, update, deleteTodo, generateToDo, generateDone);
 
-function list (items, onclick, deleteTodo){
+function list (items, onclick, deleteTodo, generateToDo, generateDone){
 return yo`<main role="main">
   <h1>Things ToDo:</h1>
   <div class="ctas">
@@ -14,8 +14,7 @@ return yo`<main role="main">
   <ul id="todoList">    
    ${items.map(function(item){
      if(item.status === 'pending'){
-       console.log(item);
-       return generate(item);                      
+       return generateToDo(item);                      
       }
     })}
   </ul>
@@ -23,23 +22,26 @@ return yo`<main role="main">
   <ul id="doneList">
     ${items.map(function (item) {
       if(item.status === "done"){
-        return yo`<li id=${item.id}>
-        ${item.value}
-        <button onclick=${deleteTodo} class="btn">Pending</button>
-        </li>`
+        return generateDone(item);
       }
     })}
   </ul>
 </main>`
 }
 
-function generate(item){
- console.log("Generate", item)  
+function generateToDo(item){
  return yo`<li id=${item.id}>
      ${item.value}
      <input type="checkbox" onclick=${deleteTodo} class="btn">
      </li>`
 }
+
+function generateDone(item){
+  return yo`<li id=${item.id}>
+      ${item.value}
+      <button onclick=${deleteTodo} class="btn">Pending</button>
+      </li>`
+ }
 
 function update () {
 // add a new random number to our list
@@ -51,7 +53,7 @@ var todo = {};
 numbers.push(todo)
 
 // construct a new list and efficiently diff+morph it into the one in the DOM
-var newList = list(numbers, update, deleteTodo)
+var newList = list(numbers, update, deleteTodo, generateToDo, generateDone)
 yo.update(el, newList)
 }
 
@@ -70,7 +72,7 @@ numbers = numbers.filter(function(el){
   return true;
 })
 
-var newList = list(numbers, update, deleteTodo);
+var newList = list(numbers, update, deleteTodo, generateToDo, generateDone);
 yo.update(el, newList)
 }
 
