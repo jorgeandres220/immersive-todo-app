@@ -2,9 +2,9 @@ var yo = require('yo-yo')
 const uuidv1 = require('uuid/v1')
 
 var numbers = []; // start empty 
-var el = list(numbers, update, deleteTodo, generate);
+var el = list(numbers, update, deleteTodo, generateToDo, generateDone);
 
-function list (items, onclick, deleteTodo){
+function list (items, onclick, deleteTodo, generateToDo, generateDone){
 return yo`<main role="main">
   <h1>Things ToDo:</h1>
   <div class="ctas">
@@ -53,7 +53,7 @@ var todo = {};
 numbers.push(todo)
 
 // construct a new list and efficiently diff+morph it into the one in the DOM
-var newList = list(numbers, update, deleteTodo)
+var newList = list(numbers, update, deleteTodo, generateToDo, generateDone)
 yo.update(el, newList)
 }
 
@@ -72,7 +72,7 @@ numbers = numbers.filter(function(el){
   return true;
 })
 
-var newList = list(numbers, update, deleteTodo);
+var newList = list(numbers, update, deleteTodo, generateToDo, generateDone);
 yo.update(el, newList)
 }
 
