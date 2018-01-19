@@ -1,6 +1,6 @@
 # To-Do List
 
-This is the first version.
+This is the second version. It uses Budo and yo-yo to create the HTML on the go.
 
 ## Getting Started
 
