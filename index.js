@@ -14,8 +14,7 @@ return yo`<main role="main">
   <ul id="todoList">    
    ${items.map(function(item){
      if(item.status === 'pending'){
-       console.log(item);
-       return generate(item);                      
+       return generateToDo(item);                      
       }
     })}
   </ul>
@@ -23,23 +22,26 @@ return yo`<main role="main">
   <ul id="doneList">
     ${items.map(function (item) {
       if(item.status === "done"){
-        return yo`<li id=${item.id}>
-        ${item.value}
-        <button onclick=${deleteTodo} class="btn">Pending</button>
-        </li>`
+        return generateDone(item);
       }
     })}
   </ul>
 </main>`
 }
 
-function generate(item){
- console.log("Generate", item)  
+function generateToDo(item){
  return yo`<li id=${item.id}>
      ${item.value}
      <input type="checkbox" onclick=${deleteTodo} class="btn">
      </li>`
 }
+
+function generateDone(item){
+  return yo`<li id=${item.id}>
+      ${item.value}
+      <button onclick=${deleteTodo} class="btn">Pending</button>
+      </li>`
+ }
 
 function update () {
 // add a new random number to our list
